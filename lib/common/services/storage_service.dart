@@ -40,7 +40,11 @@ class StorageService {
       final key = const Uuid().v1() + extension;
       final awsFile = AWSFile.fromPath(file.path);
 
-      await Amplify.Storage.uploadFile(
+      debugPrint(extension);
+      debugPrint(key);
+      debugPrint(awsFile.path);
+
+      final result = await Amplify.Storage.uploadFile(
         localFile: awsFile,
         key: key,
         onProgress: (progress) {
@@ -48,6 +52,7 @@ class StorageService {
         },
       ).result;
 
+      debugPrint(result.uploadedItem.toString());
       return key;
     } on Exception catch (e) {
       debugPrint(e.toString());
